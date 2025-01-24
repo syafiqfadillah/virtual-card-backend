@@ -1,0 +1,29 @@
+BEGIN TRY
+
+BEGIN TRAN;
+
+-- CreateTable
+CREATE TABLE [dbo].[EmployeeProfiles] (
+    [id] INT NOT NULL IDENTITY(1,1),
+    [fullName] NVARCHAR(1000) NOT NULL,
+    [phoneNbr] NVARCHAR(1000) NOT NULL,
+    [email] NVARCHAR(1000) NOT NULL,
+    [jobTitle] NVARCHAR(1000) NOT NULL,
+    [division] NVARCHAR(1000) NOT NULL,
+    [company] NVARCHAR(1000) NOT NULL,
+    [address] NVARCHAR(1000) NOT NULL,
+    CONSTRAINT [EmployeeProfiles_pkey] PRIMARY KEY CLUSTERED ([id])
+);
+
+COMMIT TRAN;
+
+END TRY
+BEGIN CATCH
+
+IF @@TRANCOUNT > 0
+BEGIN
+    ROLLBACK TRAN;
+END;
+THROW
+
+END CATCH
