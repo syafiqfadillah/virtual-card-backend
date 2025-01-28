@@ -1,6 +1,6 @@
-import express from "express";
-import employeeProfilesController from "../controllers/employeeProfilesController.js";
-import payloadValidationMiddleware from "../middlewares/payloadValidationMiddleware.js";
+const express = require("express");
+const employeeProfilesController = require("../controllers/employeeProfilesController.js");
+const payloadValidationMiddleware = require("../middlewares/payloadValidationMiddleware.js");
 
 const router = express.Router();
 const controller = employeeProfilesController();
@@ -9,6 +9,7 @@ const controller = employeeProfilesController();
 // so, i set it at router-level middleware 
 router.get("/all", payloadValidationMiddleware, controller.getAll);
 router.get("/view", payloadValidationMiddleware, controller.getOne);
-router.post("/create", payloadValidationMiddleware, controller.create);
+router.get("/get-qr/:name", payloadValidationMiddleware, controller.getQrCode);
+router.post("/create", payloadValidationMiddleware, controller.createProfile);
 
-export default router;
+module.exports = router;

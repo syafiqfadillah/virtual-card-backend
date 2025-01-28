@@ -1,4 +1,4 @@
-import cors from "cors";
+const cors = require("cors");
 
 function corsHandlerMiddleware() {
     const originSetup = {
@@ -10,4 +10,4 @@ function corsHandlerMiddleware() {
     return callCors;
 }
 
-export default corsHandlerMiddleware;
+module.exports = corsHandlerMiddleware;

@@ -1,3 +1,5 @@
+const fs = require("fs");
+
 function formatDate(date, separator = '') {
     var d = new Date(date),
         month = '' + (d.getMonth() + 1),
@@ -12,4 +14,14 @@ function formatDate(date, separator = '') {
     return [year, month, day].join(separator);
 }
 
-export { formatDate };
+function saveFile(filename, binary) {
+    const path = `../../uploads/${filename}`;
+
+    if (!fs.existsSync(path)) {
+        const saveFile = fs.writeFileSync(path, binary, "binary");
+
+        return saveFile;
+    }
+}
+
+module.exports = { formatDate, saveFile }

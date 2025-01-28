@@ -1,8 +1,8 @@
-import { createLogger, transports, format } from "winston";
-import { formatDate } from "../helpers/fmmHelpers.js";
+const { createLogger, transports, format } = require("winston");
+const { formatDate } = require("../helpers/fmmHelpers.js");
 
 const currentDate = formatDate(new Date(), "");
-const pathLogs = "./app/logs";
+const pathLogs = "../../logs";
 
 function generalLogger() {
     return createLogger({
@@ -20,4 +20,4 @@ function generalLogger() {
     });
 }
 
-export default generalLogger;
+module.exports = generalLogger;

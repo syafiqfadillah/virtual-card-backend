@@ -13,4 +13,4 @@ function payloadValidationMiddleware(req, _res, next) {
     return next(error);
 }
 
-export default payloadValidationMiddleware;
+module.exports = payloadValidationMiddleware;

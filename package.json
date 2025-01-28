@@ -18,6 +18,5 @@
     "express-winston": "^4.2.0",
     "nodemon": "^3.1.9",
     "winston": "^3.17.0"
-  },
-  "type": "module"
+  }
 }

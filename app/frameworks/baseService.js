@@ -44,4 +44,4 @@ function baseService(repository) {
     };
 }
 
-export default baseService;
+module.exports = baseService;

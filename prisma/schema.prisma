@@ -16,4 +16,5 @@ model EmployeeProfiles {
     division String 
     company String 
     address String
+    qrPath String?
 }

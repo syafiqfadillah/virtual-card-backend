@@ -1,5 +1,5 @@
-import expressWinston from "express-winston";
-import generalLogger from "../configs/loggerConfig.js";
+const expressWinston = require("express-winston");
+const generalLogger = require("../configs/loggerConfig.js");
 
 function loggingMiddleware() {
     const config = expressWinston.logger({
@@ -32,4 +32,4 @@ function loggingMiddleware() {
     return config;
 }
 
-export default loggingMiddleware;
+module.exports = loggingMiddleware;

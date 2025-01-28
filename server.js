@@ -1,6 +1,6 @@
-import dotenv from "dotenv";
-import app from "./app/index.js";
-import generalLogger from "./app/configs/loggerConfig.js";
+const dotenv = require("dotenv");
+const app = require("./app/index.js");
+const generalLogger = require("./app/configs/loggerConfig.js");
 
 dotenv.config();
 

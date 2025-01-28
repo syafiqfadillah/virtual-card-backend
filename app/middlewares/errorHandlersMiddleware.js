@@ -11,4 +11,4 @@ function basicHandlerMiddleware(err, _req, res, _next) {
     res.status(statusCode).json(bodyRes);
 }
 
-export default basicHandlerMiddleware;
+module.exports = basicHandlerMiddleware;

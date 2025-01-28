@@ -1,9 +1,9 @@
-import express from "express";
-import bodyParser from "body-parser";
-import basicHandlerMiddleware from "./middlewares/errorHandlersMiddleware.js";
-import loggingMiddleware from "./middlewares/loggingMiddleware.js";
-import corsHandlerMiddleware from "./middlewares/corsHandlersMiddleware.js";
-import employeeProfilesRoutes from "./routes/employeeProfilesRoute.js";
+const express = require("express");
+const bodyParser = require("body-parser");
+const basicHandlerMiddleware = require("./middlewares/errorHandlersMiddleware");
+const loggingMiddleware = require("./middlewares/loggingMiddleware.js");
+const corsHandlerMiddleware = require("./middlewares/corsHandlersMiddleware.js");
+const employeeProfilesRoutes = require("./routes/employeeProfilesRoute.js");
 
 const app = express();
 
@@ -19,4 +19,4 @@ app.use(express.json());
 app.use("/employee-profile", employeeProfilesRoutes);
 app.use(basicHandlerMiddleware);
 
-export default app;
+module.exports = app;

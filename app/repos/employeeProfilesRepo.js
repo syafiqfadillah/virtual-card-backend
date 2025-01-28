@@ -1,9 +1,8 @@
-import { PrismaClient } from "@prisma/client";
-import baseRepo from "../frameworks/baseRepo.js";
+const { PrismaClient } = require("@prisma/client");
+const baseRepo = require("../frameworks/baseRepo.js");
 
 const prisma = new PrismaClient();
 const model = prisma.employeeProfiles;
-
 
 function employeeProfilesRepo() {
     const repo = baseRepo(model);
@@ -11,4 +10,4 @@ function employeeProfilesRepo() {
     return Object.assign({ }, repo);
 }
 
-export default employeeProfilesRepo;
+module.exports = employeeProfilesRepo;

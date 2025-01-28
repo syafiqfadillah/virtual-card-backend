@@ -66,4 +66,4 @@ function baseRepo(model) {
     };
 }
 
-export default baseRepo;
+module.exports = baseRepo;
