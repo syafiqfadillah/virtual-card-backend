@@ -6,13 +6,13 @@ const repo = employeeProfilesRepo();
 
 async function createQrCode(id) {
     const getProfile = await repo.findById(id);
-    const encode = btoa(getProfile.email);
+    const encode = btoa(`${getProfile.email}|${id}`);
     const filename = `qr-${encode}.png`;
     const path = `./uploads/${filename}`;
 
     if (!fs.existsSync(path)) {
         try {
-            const createQr = await fetch(`https://api.qrserver.com/v1/create-qr-code?data=${encodeURIComponent(`http://localhost:3000/view?id=${id}`)}`, {
+            const createQr = await fetch(`https://api.qrserver.com/v1/create-qr-code?data=${encodeURIComponent(`http://172.16.250.46:3090/view?id=${id}`)}`, {
                 headers: {
                     'Content-Type': 'application/octet-stream',
                 },

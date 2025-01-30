@@ -10,6 +10,7 @@ const controller = employeeProfilesController();
 router.get("/all", payloadValidationMiddleware, controller.getAll);
 router.get("/view", payloadValidationMiddleware, controller.getOne);
 router.get("/get-qr/:name", payloadValidationMiddleware, controller.getQrCode);
+router.get("/download-qr/:name", payloadValidationMiddleware, controller.downloadQrCode);
 router.post("/create", payloadValidationMiddleware, controller.createProfile);
 
 module.exports = router;

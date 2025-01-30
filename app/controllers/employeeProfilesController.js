@@ -32,10 +32,27 @@ async function getQrCode(req, res, next) {
     }
 }
 
+async function downloadQrCode(req, res, next) {
+    const options = {
+        root: "./uploads",
+        headers: {
+            "Content-Disposition": "attachment;",
+            "Content-Type": "image/*"
+        }
+    };
+    const filename = req.params.name;
+
+    try {
+        res.sendFile(filename, options);
+    } catch (error) {
+        next(error);
+    }
+}
+
 function employeeProfilesController() {
     const controller = baseController(service);
 
-    return Object.assign({ createProfile, getQrCode }, controller);
+    return Object.assign({ createProfile, getQrCode, downloadQrCode }, controller);
 }
 
 module.exports = employeeProfilesController;

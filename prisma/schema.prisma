@@ -11,10 +11,11 @@ model EmployeeProfiles {
     id Int @id @default(autoincrement())
     fullName String
     phoneNbr String 
+    workPhoneNbr String 
+    faxNbr String
     email String 
     jobTitle String 
-    division String 
     company String 
     address String
-    qrPath String?
+    qrFilename String?
 }
