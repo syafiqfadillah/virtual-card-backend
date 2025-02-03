@@ -18,4 +18,5 @@ model EmployeeProfiles {
     company String 
     address String
     qrFilename String?
+    vcfFilename String?
 }

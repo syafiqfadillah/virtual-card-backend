@@ -1,3 +1,4 @@
+const path = require('path');
 const baseController = require("../frameworks/baseController.js");
 const employeeProfilesService = require("../services/employeeProfilesService.js");
 
@@ -17,7 +18,7 @@ async function createProfile(req, res, next) {
 
 async function getQrCode(req, res, next) {
     const options = {
-        root: "./uploads",
+        root: "./uploads/qrs",
         dotfiles: "deny",
         headers: {
             "Cache-Control": "max=3600"
@@ -32,15 +33,17 @@ async function getQrCode(req, res, next) {
     }
 }
 
-async function downloadQrCode(req, res, next) {
+function downloadFile(req, res, next) {
+    const filename = req.query.name;
+    const downloadType = req.query.type;
+    const contentType = path.extname(filename) == ".png" ? "image/*" : "text/*";
     const options = {
-        root: "./uploads",
+        root: `./uploads/${downloadType}`,
         headers: {
-            "Content-Disposition": "attachment;",
-            "Content-Type": "image/*"
+            "Content-Disposition": `attachment; filename=${filename}`,
+            "Content-Type": contentType
         }
     };
-    const filename = req.params.name;
 
     try {
         res.sendFile(filename, options);
@@ -52,7 +55,7 @@ async function downloadQrCode(req, res, next) {
 function employeeProfilesController() {
     const controller = baseController(service);
 
-    return Object.assign({ createProfile, getQrCode, downloadQrCode }, controller);
+    return Object.assign({ createProfile, getQrCode, downloadFile }, controller);
 }
 
 module.exports = employeeProfilesController;
