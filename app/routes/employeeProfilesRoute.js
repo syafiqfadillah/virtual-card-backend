@@ -12,5 +12,6 @@ router.get("/view", payloadValidationMiddleware, controller.getOne);
 router.get("/get-qr/:name", payloadValidationMiddleware, controller.getQrCode);
 router.get("/download-file", payloadValidationMiddleware, controller.downloadFile);
 router.post("/create", payloadValidationMiddleware, controller.createProfile);
+router.put("/update", payloadValidationMiddleware, controller.updateProfile);
 
 module.exports = router;

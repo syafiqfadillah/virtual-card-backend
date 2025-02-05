@@ -1,0 +1,11 @@
+BEGIN:VCARD
+VERSION:3.0
+FN:Andy Ruswin
+TITLE:Programmer
+EMAIL;TYPE=work:arus@gmail.com
+TEL;TYPE=cell:+628123123
+TEL;TYPE=work:+628321321
+TEL;TYPE=fax:
+ORG:PT Fajar Mas Murni
+ADR:;;ABC;;;;
+END:VCARD

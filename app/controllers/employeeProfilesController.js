@@ -16,6 +16,19 @@ async function createProfile(req, res, next) {
     }
 }
 
+async function updateProfile(req, res, next) {
+    try {
+        const id = req.query.id;
+        const newItem = await service.updateProfile(id, req.body);
+        res.status(201).json({
+            success: true,
+            data: newItem
+        })
+    } catch (error) {
+        next(error);
+    }
+}
+
 async function getQrCode(req, res, next) {
     const options = {
         root: "./uploads/qrs",
@@ -55,7 +68,7 @@ function downloadFile(req, res, next) {
 function employeeProfilesController() {
     const controller = baseController(service);
 
-    return Object.assign({ createProfile, getQrCode, downloadFile }, controller);
+    return Object.assign({ createProfile, updateProfile, getQrCode, downloadFile }, controller);
 }
 
 module.exports = employeeProfilesController;

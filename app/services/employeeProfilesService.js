@@ -29,9 +29,10 @@ async function createQrCode(id, email) {
 async function createVcf(body) {
     const folder = "./uploads/vcfs";
     let filename = createFilename("vcf", `${body.email}|${body.id}`, "vcf");
+    const fullPath = `${folder}/${filename}`;
 
     try {
-        const vcf = await fs.createWriteStream(`${folder}/${filename}`, { flags: "a" });
+        const vcf = await fs.createWriteStream(fullPath, { flags: "w" });
 
         vcf.write("BEGIN:VCARD\r\n");
         vcf.write("VERSION:3.0\r\n");
@@ -40,6 +41,7 @@ async function createVcf(body) {
         vcf.write(`EMAIL;TYPE=work:${body.email}\r\n`);
         vcf.write(`TEL;TYPE=cell:${body.phoneNbr}\r\n`);
         vcf.write(`TEL;TYPE=work:${body.workPhoneNbr}\r\n`);
+        vcf.write(`TEL;TYPE=fax:${body.faxNbr}\r\n`);
         vcf.write(`ORG:${body.company}\r\n`);
         vcf.write(`ADR:;;${body.address};;;;\r\n`);
         vcf.write("END:VCARD");
@@ -50,16 +52,35 @@ async function createVcf(body) {
     return filename;
 }
 
-async function createProfile(body) {
-    let response = null;
-    const profile = await repo.add(body);
-    const profileId = profile.id;
-    const qrFilename = await createQrCode(profileId, body.email);
+async function createFiles(profile) {
+    const qrFilename = await createQrCode(profile.id, profile.email);
     const vcfFilename = await createVcf(profile);
+    const data = qrFilename && vcfFilename ? { qrFilename, vcfFilename } : {};
 
-    if (qrFilename && vcfFilename) {
-        response = await repo.updateById(profileId, { qrFilename, vcfFilename });
+    return data;
+}
+
+async function updateBodyFiles(profile) {
+    const files = await createFiles(profile);
+    let response = null;
+
+    if (files) {
+        response = await repo.updateById(profile.id, files);
     }
+
+    return response;
+}
+
+async function createProfile(rawBody) {
+    const profile = await repo.add(rawBody);
+    const response = await updateBodyFiles(profile);
+
+    return response;
+}
+
+async function updateProfile(id, rawBody) {
+    const profile = await repo.updateById(id, rawBody);
+    const response = await updateBodyFiles(profile);
 
     return response;
 }
@@ -67,7 +88,7 @@ async function createProfile(body) {
 function employeeProfilesService() {
     const service = baseService(repo);
 
-    return Object.assign({ createProfile, createQrCode }, service);
+    return Object.assign({ createProfile, updateProfile, createQrCode }, service);
 }
 
 module.exports = employeeProfilesService;
