@@ -1,14 +1,26 @@
+const { Prisma } = require("@prisma/client");
+
 function baseRepo(model) {
-    function omit(obj, ...props) {
-        const result = { ...obj };
-        props.forEach((prop) => delete result[prop]);
-        return result;
+    function search(value) {
+        const filters = [];
+        const fields = Prisma.dmmf.datamodel.models.find(mn => mn.name === model.name).fields;
+
+        fields.forEach((field) => {
+            if (field.name != "id") {
+                const returns = { };
+                returns[field.name] = { contains: value };
+    
+                filters.push(returns);
+            }
+        });
+
+        return filters;
     }
 
     // Find all posts with pagination
     const findAll = async (params) => {
         const posts = await model.findMany({
-            where: omit(params, 'page', 'perPage'),
+            where: params.search ? { OR: search(params.search) } : { },
             skip: Number(params.perPage) * (params.page - 1),
             take: Number(params.perPage),
         });
@@ -18,7 +30,7 @@ function baseRepo(model) {
     // Count total number of posts
     const countAll = async (params) => {
         const count = await model.count({
-            where: omit(params, 'page', 'perPage'),
+            where: params.search ? { OR: search(params.search) } : { },
         });
         return count;
     };

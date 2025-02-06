@@ -31,4 +31,9 @@ npm-debug.log
 
 .DS_Store
 
+# Env
 .env
+
+# File Ext
+*.png
+*.vcf
